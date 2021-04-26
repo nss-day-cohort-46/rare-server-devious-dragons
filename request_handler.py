@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from posts.request import get_all_posts
 
 
 
@@ -48,11 +49,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if len(parsed) == 2:
             resource, id = parsed
-            if resource == "login":
-                pass
-                #####################################################
-                #####################################################
-                #####################################################
+            if resource == "posts":
+                response = f"{get_all_posts()}"
 
         self.wfile.write(f"{response}".encode())
 
