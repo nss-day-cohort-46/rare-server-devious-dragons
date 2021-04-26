@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-
-
+from users.request import register_user
 
 class HandleRequests(BaseHTTPRequestHandler):
     def parse_url(self, path):
@@ -36,9 +35,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods',
-                         'GET, POST, PUT, DELETE')
+                        'GET, POST, PUT, DELETE')
         self.send_header('Access-Control-Allow-Headers',
-                         'X-Requested-With, Content-Type, Accept')
+                        'X-Requested-With, Content-Type, Accept')
         self.end_headers()
 
     def do_GET(self):
@@ -82,6 +81,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             }
             new_item = json.dumps(new_item)
 
+        if resource == "register":
+            new_item = register_user(post_body)
 
         self.wfile.write(f"{new_item}".encode())
 
