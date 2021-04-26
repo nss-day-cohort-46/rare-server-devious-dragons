@@ -96,3 +96,5 @@ INSERT INTO Users VALUES (null, "Ferb", "Smith","109@summer.com", "Where's Perry
 INSERT INTO Users VALUES (null, "Perry", "Smith","seceret@summer.com", "Doofenshmirtz sucks!", "SummerRocks", "Agent", "N/A", "2020/25/04", 1,  0);
 
 
+SELECT * FROM Users
+
