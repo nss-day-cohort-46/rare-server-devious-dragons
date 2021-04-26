@@ -49,8 +49,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(parsed) == 2:
             resource, id = parsed
             if resource == "login":
+                pass
                 #####################################################
-                ####################TBD##############################
+                #####################################################
                 #####################################################
 
         self.wfile.write(f"{response}".encode())
@@ -69,10 +70,18 @@ class HandleRequests(BaseHTTPRequestHandler):
         new_item = None
 
         if resource == "login":
-            # client expects "valid" in response, user id as "token"
+            # This will be replaced with validate_user(post_body)
             #####################################################
             #####################################################
             #####################################################
+
+            #
+            new_item = {
+                "valid": True,
+                "token": 1
+            }
+            new_item = json.dumps(new_item)
+
 
         self.wfile.write(f"{new_item}".encode())
 
