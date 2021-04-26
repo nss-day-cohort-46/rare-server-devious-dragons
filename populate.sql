@@ -30,7 +30,9 @@ VALUES
 (3,1,"Zzzzz."),
 (3,3,"Bee boo boo bee boo.")
 
+
 -- create 3 users
+
 
 INSERT INTO Users VALUES (null, "Phineas", "Smith","108@summer.com", "What do you want to do taday Ferb?", "SummerRocks", "Perry", "N/A", "2020/25/04", 1,  0);
 INSERT INTO Users VALUES (null, "Ferb", "Smith","109@summer.com", "Where's Perry", "SummerRocks", "Phineas", "N/A", "2020/25/04", 0,  0);
