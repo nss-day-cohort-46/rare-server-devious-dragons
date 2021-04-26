@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import get_all_posts
+from posts.request import get_all_posts, get_single_post
 from users.request import register_user
 
 
@@ -51,7 +51,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(parsed) == 2:
             resource, id = parsed
             if resource == "posts":
-                response = f"{get_all_posts()}"
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
 
         self.wfile.write(f"{response}".encode())
 
