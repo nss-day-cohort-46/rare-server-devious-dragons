@@ -10,3 +10,22 @@ VALUES (null, 1, 1, "First Launch!", "2021-04-24", "https://images.unsplash.com/
 
 SELECT * FROM POSTS
 
+-- Add 3 subscriptions
+
+INSERT INTO Subscriptions ('follower_id', 'author_id', 'created_on') VALUES (2, 3, '2021-04-26');
+INSERT INTO Subscriptions ('follower_id', 'author_id', 'created_on') VALUES (1, 2, '2021-04-23');
+INSERT INTO Subscriptions ('follower_id', 'author_id', 'created_on') VALUES (3, 1, '2021-04-22');
+
+
+-- Add 7 comments
+
+INSERT INTO Comments
+(post_id, author_id, content)
+VALUES
+(1,1,"Cool story bro."),
+(1,2,"Ok boomer."),
+(1,3,"Oh yeah right."),
+(2,2,"Deeeep."),
+(2,3,"2 stars. Would not read again."),
+(3,1,"Zzzzz."),
+(3,3,"Bee boo boo bee boo.")
