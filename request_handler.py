@@ -69,12 +69,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         new_item = None
 
         if resource == "login":
-            # This will be replaced with validate_user(post_body)
-            #####################################################
-            #####################################################
-            #####################################################
-
-            #
+            validate = None
             new_item = {
                 "valid": True,
                 "token": 1
