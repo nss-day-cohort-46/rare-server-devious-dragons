@@ -6,7 +6,7 @@ class Post():
         self.userId = user_id
         self.title = title
         self.content = content
-        self.publicationDate = date.today()
+        self.publicationDate = publication_date
         self.categoryId = category_id
         self.imageUrl = image_url
         self.approved = approved
