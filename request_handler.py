@@ -1,3 +1,4 @@
+from categories.request import create_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
@@ -53,6 +54,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             resource, id = parsed
             if resource == "posts":
                 response = f"{get_all_posts()}"
+            elif resource == "categories":
+                response = f"{get_all_categories()}"
 
         self.wfile.write(f"{response}".encode())
 
@@ -74,6 +77,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_item = register_user(post_body)
+        if resource == "categories":
+            new_item = create_category(post_body)
 
         self.wfile.write(f"{new_item}".encode())
 
