@@ -3,6 +3,7 @@ import json
 
 from posts.request import get_all_posts
 from users.request import register_user
+from users.request import get_auth_user
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -69,17 +70,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         new_item = None
 
         if resource == "login":
-            # This will be replaced with validate_user(post_body)
-            #####################################################
-            #####################################################
-            #####################################################
-
-            #
-            new_item = {
-                "valid": True,
-                "token": 1
-            }
-            new_item = json.dumps(new_item)
+            new_item = get_auth_user(post_body)
 
         if resource == "register":
             new_item = register_user(post_body)
