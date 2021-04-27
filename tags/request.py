@@ -27,3 +27,21 @@ def get_all_tags():
             tags.append(tag.__dict__)
 
     return json.dumps(tags)
+
+def create_tag(tag_post):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO Tags
+            (label)
+        VALUES
+            ( ?);
+        """, (tag_post['label'], ))
+
+        id = db_cursor.lastrowid
+
+        tag_post['id'] = id
+
+
+    return json.dumps(tag_post)
