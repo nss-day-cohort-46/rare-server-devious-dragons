@@ -1,4 +1,4 @@
-from comments.request import create_comment
+from comments.request import create_comment, get_all_comments
 from categories.request import create_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -63,7 +63,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 
             elif resource == "categories":
                 response = f"{get_all_categories()}"
-
+            elif resource == "comments":
+                response = f"{get_all_comments()}"
 
         self.wfile.write(f"{response}".encode())
 
