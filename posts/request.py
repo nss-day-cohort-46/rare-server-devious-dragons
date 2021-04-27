@@ -90,8 +90,8 @@ def create_post(new_post):
             new_post['user_id'],
             new_post['title'],
             new_post['content'],
-            date.today(),
-            0,
+            new_post['publication_date'],
+            new_post['category_id'],
             "",
             0,
             )
