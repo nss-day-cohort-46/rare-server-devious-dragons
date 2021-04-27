@@ -2,7 +2,7 @@ from categories.request import create_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import get_all_posts
+from posts.request import get_all_posts, get_single_post
 from users.request import register_user
 from users.request import get_auth_user
 
@@ -53,9 +53,16 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(parsed) == 2:
             resource, id = parsed
             if resource == "posts":
-                response = f"{get_all_posts()}"
+
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
+
+                
             elif resource == "categories":
                 response = f"{get_all_categories()}"
+
 
         self.wfile.write(f"{response}".encode())
 
