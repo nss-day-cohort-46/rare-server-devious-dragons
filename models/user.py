@@ -12,3 +12,13 @@ class User():
         self.created_on = date.today()
         self.active = 1
         self.is_staff = 1
+
+
+@property
+def __password(self, password):
+    self.__password = password
+
+
+@__password.setter
+def password(self, pswd):
+    pass

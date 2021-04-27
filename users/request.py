@@ -13,15 +13,15 @@ def get_all_users():
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         SELECT
-            c.id,
-            c.name,
-            c.address,
-            c.email
-        FROM customer c
+            u.id,
+            u.name,
+            u.address,
+            u.email
+        FROM Users u
         """)
 
         # Initialize an empty list to hold all customer representations
-        customers = []
+        users = []
 
         # Convert rows of data into a Python list
         dataset = db_cursor.fetchall()
@@ -33,7 +33,7 @@ def get_all_users():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Animal class above.
-            customer = Customer(row['id'], row['name'], row['address'],
+            customer = User(row['id'], row['name'], row['address'],
                             row['email'])
 
             customers.append(customer.__dict__)
@@ -120,3 +120,31 @@ def get_user_by_email(email):
             customers.append(customer.__dict__)
 
     return json.dumps(customers)
+
+
+def get_auth_user(post_login):
+    with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        print(post_login["username"])
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        select
+            u.id
+        FROM Users u
+        WHERE u.email= ? and u.password = ?
+        """, (post_login["username"], post_login["password"]))
+        
+        dataset = db_cursor.fetchone()
+        
+        validate = {}
+
+        if dataset["id"]:
+            validate = {
+                "valid": True,
+                "token": dataset["id"]
+            }
+
+        return json.dumps(validate)
+
+            
