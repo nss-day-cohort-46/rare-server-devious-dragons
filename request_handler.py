@@ -1,8 +1,10 @@
+from categories.request import create_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 from posts.request import get_all_posts
 from users.request import register_user
+from users.request import get_auth_user
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -52,6 +54,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             resource, id = parsed
             if resource == "posts":
                 response = f"{get_all_posts()}"
+            elif resource == "categories":
+                response = f"{get_all_categories()}"
 
         self.wfile.write(f"{response}".encode())
 
@@ -69,20 +73,12 @@ class HandleRequests(BaseHTTPRequestHandler):
         new_item = None
 
         if resource == "login":
-            # This will be replaced with validate_user(post_body)
-            #####################################################
-            #####################################################
-            #####################################################
-
-            #
-            new_item = {
-                "valid": True,
-                "token": 1
-            }
-            new_item = json.dumps(new_item)
+            new_item = get_auth_user(post_body)
 
         if resource == "register":
             new_item = register_user(post_body)
+        if resource == "categories":
+            new_item = create_category(post_body)
 
         self.wfile.write(f"{new_item}".encode())
 
