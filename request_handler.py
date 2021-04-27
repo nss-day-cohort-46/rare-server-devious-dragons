@@ -1,3 +1,4 @@
+from categories.request import update_category
 from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -88,6 +89,25 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_item = create_category(post_body)
 
         self.wfile.write(f"{new_item}".encode())
+
+    def do_PUT(self):
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
+
+        resource, id = self.parse_url(self.path)
+
+        success = False
+
+        if resource == "categories":
+            success = update_category(id, post_body)
+
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
+
+        self.wfile.write("".encode())
 
     def do_DELETE(self):
         self._set_headers(204)
