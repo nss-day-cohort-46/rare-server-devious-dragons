@@ -1,4 +1,5 @@
 import sqlite3, json
+from datetime import date
 from models import Post
 
 def get_all_posts():
@@ -66,3 +67,38 @@ def get_single_post(id):
                             data['image_url'], data['content'], data['approved'])
         
         return json.dumps(post.__dict__)
+
+def create_post(new_post):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO posts
+            (
+            user_id,
+            title,
+            content,
+            publication_date,
+            category_id,
+            image_url,
+            approved
+            )
+        VALUES
+            ( ?, ?, ?, ?, ?, ?, ?);
+        """,
+            (
+            new_post['user_id'],
+            new_post['title'],
+            new_post['content'],
+            date.today(),
+            0,
+            "",
+            0,
+            )
+        )
+
+        id = db_cursor.lastrowid
+        new_post['id'] = id
+
+    return json.dumps(new_post)
+
