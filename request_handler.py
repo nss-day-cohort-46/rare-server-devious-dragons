@@ -1,4 +1,4 @@
-from categories.request import create_category, get_all_categories
+from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
@@ -88,6 +88,14 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_item = create_category(post_body)
 
         self.wfile.write(f"{new_item}".encode())
+
+    def do_DELETE(self):
+        self._set_headers(204)
+        resource, id = self.parse_url(self.path)
+
+        if resource == "categories":
+            delete_category(id)
+
 
 def main():
     host = ''
