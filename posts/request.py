@@ -16,7 +16,7 @@ def get_all_posts():
             publication_date,
             image_url,
             content,
-            approved
+            approved,
         FROM Posts
         """)
 
@@ -35,6 +35,9 @@ def get_all_posts():
                         row['approved']) 
             posts.append(post.__dict__)
 
+    
+    
+    
     return json.dumps(posts)
 
 def get_single_post(id):
