@@ -9,6 +9,7 @@ from users.request import register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
+from tags.tag_request import create_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -109,6 +110,9 @@ class HandleRequests(BaseHTTPRequestHandler):
   
         if resource == "tags":
             new_item = create_tag(post_body)
+        
+        if resource == "postTags":
+            new_item = create_post_tag(post_body)
 
 
         self.wfile.write(f"{new_item}".encode())
