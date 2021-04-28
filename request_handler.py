@@ -1,11 +1,12 @@
 from categories.request import update_category
-from comments.request import create_comment, get_all_comments
+from comments.request import create_comment, get_all_comments, get_comments_by_post_id
 from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import create_post, get_all_posts, get_single_post
+
 from users.request import get_all_users, get_user_by_id, register_user
+from posts.request import create_post, get_all_posts, get_single_post, update_post
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
@@ -74,12 +75,21 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "tags":
                 response = f"{get_all_tags()}"
 
+
+        elif len(parsed) == 3:
+            ( resource, key, value ) = parsed
+
+            if key == "postId" and resource == "comments":
+                response = get_comments_by_post_id(value)
+            
+
             elif resource == "users":
 
                 if id is not None:
                     response = f"{get_user_by_id(id)}"
                 else:
                     response = f"{get_all_users()}"
+
 
 
 
@@ -134,6 +144,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "categories":
             success = update_category(id, post_body)
+
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
