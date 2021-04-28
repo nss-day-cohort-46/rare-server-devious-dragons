@@ -4,11 +4,12 @@ from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import create_post, get_all_posts, get_single_post
-from users.request import register_user
+from posts.request import create_post, get_all_posts, get_single_post, update_post
+from users.request import get_all_users, register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
+from tags.tag_request import create_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -70,9 +71,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = f"{get_all_comments()}"
 
-            
             elif resource == "tags":
                 response = f"{get_all_tags()}"
+
 
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
@@ -80,6 +81,11 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "postId" and resource == "comments":
                 response = get_comments_by_post_id(value)
             
+
+            elif resource == "users":
+                response = f"{get_all_users()}"
+
+
 
 
         self.wfile.write(f"{response}".encode())
@@ -115,6 +121,9 @@ class HandleRequests(BaseHTTPRequestHandler):
   
         if resource == "tags":
             new_item = create_tag(post_body)
+        
+        if resource == "postTags":
+            new_item = create_post_tag(post_body)
 
 
         self.wfile.write(f"{new_item}".encode())
@@ -130,6 +139,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "categories":
             success = update_category(id, post_body)
+
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
