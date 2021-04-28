@@ -100,7 +100,7 @@ SELECT * FROM Users
 
 SELECT * FROM Tags
 
-UPDATE Users
-            SET
-                username = "SummerRawks"
-            WHERE first_name = "Perry"
+SELECT * FROM PostTags
+
+SELECT * FROM Posts
+
