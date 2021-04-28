@@ -92,7 +92,7 @@ def create_post(new_post):
             new_post['content'],
             new_post['publication_date'],
             new_post['category_id'],
-            "",
+            new_post['image_url'],
             0,
             )
         )
