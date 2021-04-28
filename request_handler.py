@@ -9,6 +9,9 @@ from users.request import get_all_users, register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
+from tags.request import delete_tag
+from tags.request import update_tag
+from tags.request import get_single_tag
 from tags.tag_request import create_post_tag
 
 
@@ -63,7 +66,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_post(id)}"
                 else:
                     response = f"{get_all_posts()}"
-
+            
+            elif resource == "tags":
+                if id is not None:
+                    response = F"{get_single_tag(id)}"
+                else:
+                    response = f"{get_all_tags()}"
                 
             elif resource == "categories":
                 response = f"{get_all_categories()}"
@@ -71,8 +79,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = f"{get_all_comments()}"
 
-            elif resource == "tags":
-                response = f"{get_all_tags()}"
+           
 
             elif resource == "users":
                 response = f"{get_all_users()}"
@@ -133,6 +140,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             success = update_post(id, post_body)
+        
+        if resource == "tags":
+            success = update_tag(id, post_body)
 
         if success:
             self._set_headers(204)
@@ -147,6 +157,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "categories":
             delete_category(id)
+
+        if resource == "tags":
+            delete_tag(id)
 
 
 def main():
