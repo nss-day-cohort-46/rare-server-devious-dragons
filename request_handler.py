@@ -4,7 +4,7 @@ from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import create_post, get_all_posts, get_single_post
+from posts.request import create_post, get_all_posts, get_single_post, update_post
 from users.request import get_all_users, register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
@@ -130,6 +130,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "categories":
             success = update_category(id, post_body)
+
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)

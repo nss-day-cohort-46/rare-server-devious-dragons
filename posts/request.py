@@ -92,7 +92,7 @@ def create_post(new_post):
             new_post['content'],
             new_post['publication_date'],
             new_post['category_id'],
-            "",
+            new_post['image_url'],
             0,
             )
         )
@@ -102,3 +102,28 @@ def create_post(new_post):
 
     return json.dumps(new_post)
 
+def update_post(id, post_obj):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE posts
+            SET
+                title = ?,
+                content = ?,
+                category_id = ?,
+                image_url= ?
+        WHERE id = ?
+        """, (
+            post_obj['title'],
+            post_obj['content'],
+            post_obj['category_id'],
+            post_obj['image_url'], id
+            , ))
+
+        rows_affected = db_cursor.rowcount
+
+    if rows_affected == 0:
+        return False
+    else:
+        return True
