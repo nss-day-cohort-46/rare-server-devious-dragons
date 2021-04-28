@@ -75,6 +75,12 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "tags":
                 response = f"{get_all_tags()}"
 
+            elif resource == "users":
+
+                if id is not None:
+                    response = f"{get_user_by_id(id)}"
+                else:
+                    response = f"{get_all_users()}"
 
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
@@ -83,12 +89,6 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_comments_by_post_id(value)
             
 
-            elif resource == "users":
-
-                if id is not None:
-                    response = f"{get_user_by_id(id)}"
-                else:
-                    response = f"{get_all_users()}"
 
 
 
