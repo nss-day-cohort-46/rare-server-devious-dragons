@@ -1,5 +1,5 @@
 from categories.request import update_category
-from comments.request import create_comment, get_all_comments
+from comments.request import create_comment, get_all_comments, get_comments_by_post_id
 from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -74,8 +74,17 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "tags":
                 response = f"{get_all_tags()}"
 
+
+        elif len(parsed) == 3:
+            ( resource, key, value ) = parsed
+
+            if key == "postId" and resource == "comments":
+                response = get_comments_by_post_id(value)
+            
+
             elif resource == "users":
                 response = f"{get_all_users()}"
+
 
 
 
