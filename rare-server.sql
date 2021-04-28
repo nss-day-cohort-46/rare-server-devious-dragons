@@ -99,3 +99,8 @@ INSERT INTO Users VALUES (null, "Perry", "Smith","seceret@summer.com", "Doofensh
 SELECT * FROM Users
 
 SELECT * FROM Tags
+
+SELECT * FROM PostTags
+
+SELECT * FROM Posts
+
