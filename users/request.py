@@ -1,6 +1,7 @@
 import sqlite3
 import json
 from models import User
+from datetime import date
 
 def get_all_users():
     # Open a connection to the database
@@ -72,11 +73,11 @@ def register_user(user):
 
         db_cursor.execute("""
         INSERT INTO users
-            ( first_name, last_name, email, password )
+            ( first_name, last_name, email, password, created_on, active, is_staff )
         VALUES
             ( ?, ?, ?, ?);
         """, (user['first_name'], user['last_name'],
-            user['email'], user['password'], ))
+            user['email'], user['password'], date.today(),1,1 ))
 
         id = db_cursor.lastrowid
 
