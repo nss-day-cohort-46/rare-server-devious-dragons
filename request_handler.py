@@ -4,13 +4,8 @@ from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-<<<<<<< HEAD
-from posts.request import create_post,get_all_posts, get_single_post, update_post, delete_post
-from users.request import register_user
-=======
-from posts.request import create_post, get_all_posts, get_single_post, update_post
+from posts.request import create_post, delete_post, get_all_posts, get_single_post, update_post
 from users.request import get_all_users, register_user
->>>>>>> main
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
