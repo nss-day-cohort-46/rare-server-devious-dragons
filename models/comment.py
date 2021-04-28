@@ -4,4 +4,5 @@ class Comment():
         self.postId = post_id
         self.authorId = author_id
         self.content = content
+        self.username = None
         
