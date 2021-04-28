@@ -4,7 +4,7 @@ from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import get_all_posts, get_single_post
+from posts.request import create_post, get_all_posts, get_single_post
 from users.request import register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
@@ -96,14 +96,17 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_item = register_user(post_body)
+
+
+        if resource == "posts":
+            new_item = create_post(post_body)
         
         if resource == "categories":
             new_item = create_category(post_body)
 
         if resource == "comments":
             new_item = create_comment(post_body)
-
-        
+  
         if resource == "tags":
             new_item = create_tag(post_body)
 
