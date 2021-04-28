@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 from posts.request import create_post, get_all_posts, get_single_post
-from users.request import register_user
+from users.request import get_all_users, register_user
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
@@ -71,9 +71,11 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = f"{get_all_comments()}"
 
-            
             elif resource == "tags":
                 response = f"{get_all_tags()}"
+
+            elif resource == "users":
+                response = f"{get_all_users()}"
 
 
 

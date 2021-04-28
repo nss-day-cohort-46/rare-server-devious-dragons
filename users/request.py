@@ -5,7 +5,7 @@ from datetime import date
 
 def get_all_users():
     # Open a connection to the database
-    with sqlite3.connect("./kennel.db") as conn:
+    with sqlite3.connect("./rare.db") as conn:
 
         # Just use these. It's a Black Box.
         conn.row_factory = sqlite3.Row
@@ -14,58 +14,36 @@ def get_all_users():
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         SELECT
-            u.id,
-            u.name,
-            u.address,
-            u.email
-        FROM Users u
+            id,
+            bio,
+            profile_image_url,
+            created_on,
+            active,
+            first_name,
+            last_name,
+            username,
+            email,
+            username,
+            password
+        FROM Users
         """)
 
-        # Initialize an empty list to hold all customer representations
-        users = []
-
-        # Convert rows of data into a Python list
-        dataset = db_cursor.fetchall()
-
-        # Iterate list of data returned from database
+        users = []   
+        dataset = db_cursor.fetchall()   
         for row in dataset:
 
-            # Create an customer instance from the current row.
-            # Note that the database fields are specified in
-            # exact order of the parameters defined in the
-            # Animal class above.
-            customer = User(row['id'], row['name'], row['address'],
-                            row['email'])
+            user = User(row['id'],
+            row['first_name'],
+            row['last_name'],
+            row['username'],
+            row['email'],
+            row['password'],
+            row['created_on'],
+            row['bio'],
+            row['profile_image_url'])
+            users.append(user.__dict__)
 
-            customers.append(customer.__dict__)
-
-    # Use `json` package to properly serialize list as JSON
-    return json.dumps(customers)
-
-
-def get_single_user(id):
-    with sqlite3.connect("./kennel.db") as conn:
-        conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor()
-
-        # Use a ? parameter to inject a variable's value
-        # into the SQL statement.
-        db_cursor.execute("""
-        SELECT
-            a.id,
-            a.name,
-            a.address,
-            a.email
-        FROM customer a
-        WHERE a.id = ?
-        """, ( id, ))
-
-        data = db_cursor.fetchone()
-
-        customer = Customer(data['id'], data['name'], data['address'],
-                            data['email'])
-
-        return json.dumps(customer.__dict__)
+    return json.dumps(users)
 
 def register_user(user):
     with sqlite3.connect("./rare.db") as conn:
@@ -87,41 +65,6 @@ def register_user(user):
 
 
     return json.dumps(user)
-
-
-def delete_user(id):
-    pass
-
-def update_user(id, new_customer):
-    pass
-
-def get_user_by_email(email):
-
-    with sqlite3.connect("./kennel.db") as conn:
-        conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor()
-
-        # Write the SQL query to get the information you want
-        db_cursor.execute("""
-        select
-            c.id,
-            c.name,
-            c.address,
-            c.email,
-            c.password
-        from Customer c
-        WHERE c.email = ?
-        """, ( email, ))
-
-        customers = []
-        dataset = db_cursor.fetchall()
-
-        for row in dataset:
-            customer = Customer(row['id'], row['name'], row['address'], row['email'] , row['password'])
-            customers.append(customer.__dict__)
-
-    return json.dumps(customers)
-
 
 def get_auth_user(post_login):
     with sqlite3.connect("./rare.db") as conn:
@@ -148,4 +91,19 @@ def get_auth_user(post_login):
 
         return json.dumps(validate)
 
-            
+
+#####################################################
+#######################todo##########################
+#####################################################
+
+def get_single_user(id):
+    pass
+
+def delete_user(id):
+    pass
+
+def update_user(id, new_customer):
+    pass
+
+def get_user_by_email(email):
+    pass
