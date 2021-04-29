@@ -1,3 +1,4 @@
+from subscriptions.request import create_subscription, delete_subscription, get_all_subscriptions
 from categories.request import update_category
 from comments.request import create_comment, get_all_comments, get_comments_by_post_id
 from categories import create_category, get_all_categories, delete_category
@@ -80,7 +81,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = f"{get_all_comments()}"
 
-           
+            elif resource == "subscriptions":
+                response = f"{get_all_subscriptions()}"   
 
             elif resource == "users":
 
@@ -95,11 +97,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "postId" and resource == "comments":
                 response = get_comments_by_post_id(value)
             
-
-
-
-
-
         self.wfile.write(f"{response}".encode())
 
     def do_POST(self):
@@ -136,6 +133,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "postTags":
             new_item = create_post_tag(post_body)
+        
+        if resource == "subscriptions":
+            new_item = create_subscription(post_body)
 
 
         self.wfile.write(f"{new_item}".encode())
@@ -177,6 +177,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             delete_post(id)
+
+        if resource == "subscriptions":
+            delete_subscription(id)
 
 def main():
     host = ''
