@@ -15,6 +15,7 @@ from tags.request import delete_tag
 from tags.request import update_tag
 from tags.request import get_single_tag
 from tags.tag_request import create_post_tag
+from tags.tag_request import delete_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -181,6 +182,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             delete_post(id)
+        
+        if resource == "postTags":
+            delete_post_tag(id)
 
         if resource == "comments":
             delete_comment(id)

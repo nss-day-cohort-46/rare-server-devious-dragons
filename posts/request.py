@@ -2,6 +2,7 @@ import sqlite3, json
 from datetime import date
 from models import Post
 from models import Tag
+from models import PostTag
 
 def get_all_posts():
     with sqlite3.connect("./rare.db") as conn:
@@ -94,24 +95,31 @@ def get_single_post(id):
         
         db_cursor.execute("""
                 SELECT 
-                    t.id,
-                    t.label 
-                FROM Tags t
-                JOIN PostTags pt
+                    pt.id,
+                    pt.tag_id,
+                    pt.post_id,
+                    t.id tagId,
+                    t.label
+                FROM PostTags pt
+                JOIN Tags t
                     ON t.id = pt.tag_id
                 WHERE pt.post_id = ?
                 """, (id,))
                     
         post_tags= db_cursor.fetchall()
 
-        tags = []
+        postTags = []
 
         for row in post_tags:
-            tag = Tag(row['id'], row['label'])
+            post_tag = PostTag(row['id'], row['tag_id'], row['post_id'])
+            
+            tag = Tag(row['tag_id'], row['label'])
 
-            tags.append(tag.__dict__)
-
-        post.tags =tags
+            post_tag.tag = tag.__dict__
+            
+            postTags.append(post_tag.__dict__)
+        
+        post.postTags =postTags
     
     return json.dumps(post.__dict__)
 

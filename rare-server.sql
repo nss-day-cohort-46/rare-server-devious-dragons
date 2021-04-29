@@ -104,3 +104,22 @@ SELECT * FROM PostTags
 
 SELECT * FROM Posts
 
+SELECT 
+    t.id,
+    t.label,
+    pt.tag_id,
+    pt.id post_tagId
+FROM PostTags pt
+JOIN Tags t
+    ON t.id = pt.tag_id
+WHERE pt.post_id = 3
+
+SELECT 
+    pt.id,
+    pt.tag_id,
+    t.id tagId,
+    t.label
+FROM PostTags pt
+JOIN Tags t
+    ON t.id = pt.tag_id
+WHERE pt.post_id = 3

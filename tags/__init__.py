@@ -3,4 +3,5 @@ from .request import (get_all_tags,
                         delete_tag, 
                         update_tag,
                         get_single_tag,)
-from .tag_request import (create_post_tag)
+from .tag_request import (create_post_tag,
+                            delete_post_tag,)
