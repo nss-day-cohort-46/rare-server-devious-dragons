@@ -1,6 +1,7 @@
 import sqlite3, json
 from datetime import date
 from models import Post
+from models import Tag
 
 def get_all_posts():
     with sqlite3.connect("./rare.db") as conn:
@@ -33,8 +34,32 @@ def get_all_posts():
                         row['image_url'],
                         row['content'],
                         row['approved']) 
-            posts.append(post.__dict__)
+            
 
+            db_cursor.execute("""
+                SELECT 
+                    t.id,
+                    t.label 
+                FROM Tags t
+                JOIN PostTags pt
+                    ON t.id = pt.tag_id
+                WHERE pt.post_id = ?
+                """, (row['id'],))
+                    
+            post_tags= db_cursor.fetchall()
+
+            tags = []
+
+            for row in post_tags:
+                tag = Tag(row['id'], row['label'])
+
+                tags.append(tag.__dict__)
+
+            post.tags =tags
+            
+            posts.append(post.__dict__)
+    
+    
     return json.dumps(posts)
 
 def get_single_post(id):
@@ -66,7 +91,29 @@ def get_single_post(id):
                             data['title'], data['publication_date'],
                             data['image_url'], data['content'], data['approved'])
         
-        return json.dumps(post.__dict__)
+        
+        db_cursor.execute("""
+                SELECT 
+                    t.id,
+                    t.label 
+                FROM Tags t
+                JOIN PostTags pt
+                    ON t.id = pt.tag_id
+                WHERE pt.post_id = ?
+                """, (id,))
+                    
+        post_tags= db_cursor.fetchall()
+
+        tags = []
+
+        for row in post_tags:
+            tag = Tag(row['id'], row['label'])
+
+            tags.append(tag.__dict__)
+
+        post.tags =tags
+    
+    return json.dumps(post.__dict__)
 
 def create_post(new_post):
     with sqlite3.connect("./rare.db") as conn:
@@ -127,3 +174,12 @@ def update_post(id, post_obj):
         return False
     else:
         return True
+
+def delete_post(id):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM posts
+        WHERE id = ?
+        """, (id, ))
