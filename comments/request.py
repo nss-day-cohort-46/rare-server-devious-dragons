@@ -53,6 +53,37 @@ def create_comment(new_comment):
 
     return json.dumps(new_comment)
 
+def get_single_comment(id):
+    with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Use a ? parameter to inject a variable's value
+        # into the SQL statement.
+        db_cursor.execute("""
+        SELECT
+            c.id,
+            c.post_id,
+            c.author_id,
+            c.content,
+            u.username
+        FROM Comments c
+        JOIN Users u
+            ON c.author_id = u.id
+        WHERE c.id = ?
+        """, ( id, ))
+
+        # Load the single result into memory
+        data = db_cursor.fetchone()
+
+        # Create an animal instance from the current row
+        comment = Comment(data['id'], data['post_id'], data['author_id'], data['content'])
+        comment.username = data['username']
+        
+        # comment.append(comment.__dict__)
+    return json.dumps(comment.__dict__)
+
+
 def get_comments_by_post_id(post_id):
     with sqlite3.connect("./rare.db") as conn:
         conn.row_factory = sqlite3.Row
@@ -78,3 +109,37 @@ def get_comments_by_post_id(post_id):
           comment.username = row['username']
           comments.append(comment.__dict__)
     return json.dumps(comments)
+
+def update_comment(id, new_comment):
+  with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE Comments
+            SET
+                post_id = ?,
+                author_id = ?,
+                content = ?
+        WHERE id = ?
+        """, (new_comment['postId'], new_comment['authorId'],
+              new_comment['content'], id, ))
+
+        # Were any rows affected?
+        # Did the client send an `id` that exists?
+        rows_affected = db_cursor.rowcount
+
+  if rows_affected == 0:
+        # Forces 404 response by main module
+      return False
+  else:
+        # Forces 204 response by main module
+      return True
+
+def delete_comment(id):
+  with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM Comments
+        WHERE id = ?
+        """, (id, ))

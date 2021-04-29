@@ -1,5 +1,5 @@
 from categories.request import update_category
-from comments.request import create_comment, get_all_comments, get_comments_by_post_id
+from comments.request import create_comment, delete_comment, get_all_comments, get_comments_by_post_id, get_single_comment, update_comment
 from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -78,7 +78,10 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = f"{get_all_categories()}"
 
             elif resource == "comments":
-                response = f"{get_all_comments()}"
+                if id is not None:
+                    response = f"{get_single_comment(id)}"
+                else:
+                    response = f"{get_all_comments()}"
 
            
 
@@ -157,7 +160,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "tags":
             success = update_tag(id, post_body)
-
+        if resource == "comments":
+            success = update_comment(id, post_body)
         if success:
             self._set_headers(204)
         else:
@@ -177,7 +181,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             delete_post(id)
-
+        if resource == "comments":
+            delete_comment(id)
 def main():
     host = ''
     port = 8088
