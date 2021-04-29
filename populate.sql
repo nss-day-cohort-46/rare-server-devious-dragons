@@ -7,6 +7,9 @@ VALUES (null, 1, 1, "First Launch!", "2021-04-24", "https://images.unsplash.com/
 "This seems pretty cool I guess", 1 ),
 (null, 1, 1, "Final post", "2021-04-26", "https://images.unsplash.com/photo-1595521488367-9b130f86bbe3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YnllfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60",
 "This website seems like it was built by students. I'm out.", 1 )
+INSERT INTO "Posts"
+VALUES(null, 2, 1, "A-G-L-E-T", "2021-04-28", "https://static.wikia.nocookie.net/phineasandferb/images/1/1f/A-g-l-e-t.jpg/revision/latest/scale-to-width-down/350?cb=20130408203404",
+"A-G-L-E-T is a song from the episode Tip of the Day, describing an important thing that is at the end of a shoelace: the aglet.", 1 )
 
 SELECT * FROM POSTS
 
