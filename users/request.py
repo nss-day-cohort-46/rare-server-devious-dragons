@@ -33,17 +33,52 @@ def get_all_users():
         for row in dataset:
 
             user = User(row['id'],
-            row['first_name'],
-            row['last_name'],
-            row['username'],
-            row['email'],
-            row['password'],
-            row['created_on'],
-            row['bio'],
-            row['profile_image_url'])
+                        row['first_name'],
+                        row['last_name'],
+                        row['username'],
+                        row['email'],
+                        row['password'],
+                        row['created_on'],
+                        row['bio'],
+                        row['profile_image_url'])
             users.append(user.__dict__)
 
     return json.dumps(users)
+
+def get_user_by_id(id):
+        with sqlite3.connect("./rare.db") as conn:
+            conn.row_factory = sqlite3.Row
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+                SELECT
+                    id,
+                    bio,
+                    profile_image_url,
+                    created_on,
+                    active,
+                    first_name,
+                    last_name,
+                    username,
+                    email,
+                    username,
+                    password
+                FROM Users
+                WHERE id = ?
+                """, (id,))
+
+            data = db_cursor.fetchone()
+            user = User(data['id'],
+                        data['first_name'],
+                        data['last_name'],
+                        data['username'],
+                        data['email'],
+                        data['password'],
+                        data['created_on'],
+                        data['bio'],
+                        data['profile_image_url'])
+
+        return json.dumps(user.__dict__)
 
 def register_user(user):
     with sqlite3.connect("./rare.db") as conn:

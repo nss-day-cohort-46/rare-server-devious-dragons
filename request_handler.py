@@ -1,11 +1,12 @@
 from categories.request import update_category
-from comments.request import create_comment, get_all_comments
+from comments.request import create_comment, get_all_comments, get_comments_by_post_id
 from categories import create_category, get_all_categories, delete_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from posts.request import create_post, get_all_posts, get_single_post, update_post
-from users.request import get_all_users, register_user
+
+from users.request import get_all_users, get_user_by_id, register_user
+from posts.request import create_post, delete_post, get_all_posts, get_single_post, update_post
 from users.request import get_auth_user
 from tags.request import get_all_tags
 from tags.request import create_tag
@@ -82,7 +83,20 @@ class HandleRequests(BaseHTTPRequestHandler):
            
 
             elif resource == "users":
-                response = f"{get_all_users()}"
+
+                if id is not None:
+                    response = f"{get_user_by_id(id)}"
+                else:
+                    response = f"{get_all_users()}"
+
+        elif len(parsed) == 3:
+            ( resource, key, value ) = parsed
+
+            if key == "postId" and resource == "comments":
+                response = get_comments_by_post_id(value)
+            
+
+
 
 
 
@@ -116,7 +130,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "comments":
             new_item = create_comment(post_body)
-  
+
         if resource == "tags":
             new_item = create_tag(post_body)
         
@@ -161,6 +175,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "tags":
             delete_tag(id)
 
+        if resource == "posts":
+            delete_post(id)
 
 def main():
     host = ''

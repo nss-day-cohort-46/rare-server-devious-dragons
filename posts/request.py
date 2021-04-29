@@ -174,3 +174,12 @@ def update_post(id, post_obj):
         return False
     else:
         return True
+
+def delete_post(id):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM posts
+        WHERE id = ?
+        """, (id, ))
