@@ -16,6 +16,7 @@ from tags.request import update_tag
 from tags.request import get_single_tag
 from tags.tag_request import create_post_tag
 from tags.tag_request import delete_post_tag
+from reactions.request import get_all_reactions
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -94,7 +95,10 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_user_by_id(id)}"
                 else:
                     response = f"{get_all_users()}"
-
+            
+            elif resource == "reactions":
+                response = f"{get_all_reactions()}"
+        
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
 
