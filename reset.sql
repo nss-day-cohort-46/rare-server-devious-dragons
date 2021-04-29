@@ -1,5 +1,3 @@
--- STEP 1
--- DROP ALL TABLES
 DROP TABLE IF EXISTS Users; 
 DROP TABLE IF EXISTS DemotionQueue;
 DROP TABLE IF EXISTS Subscriptions;
@@ -11,8 +9,6 @@ DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS PostTags;
 DROP TABLE IF EXISTS Categories;
 
--- STEP 2
--- CREATE TABLES
 CREATE TABLE "Users" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "first_name" varchar,
@@ -100,8 +96,6 @@ CREATE TABLE "Categories" (
   "label" varchar
 );
 
--- STEP 3
--- POPULATE TABLES
 
 INSERT INTO Users VALUES (null, "Phineas", "Smith","108@summer.com", "What do you want to do taday Ferb?", "SummerRocks", "Perry", "N/A", "2020/25/04", 1,  0),
                          (null, "Ferb", "Smith","109@summer.com", "Where's Perry", "SummerRoxxx", "Phineas", "N/A", "2020/25/04", 0,  0),
@@ -164,6 +158,3 @@ VALUES  ('Snakes'),
         ('Parades'),
         ('Whales'),
         ('Electricity');
-
--- Step 4
--- TEST THAT APP BABY
