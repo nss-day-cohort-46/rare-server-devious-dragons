@@ -46,3 +46,12 @@ def create_post_tag(post_with_tag):
 
 
     return json.dumps(post_with_tag)
+
+def delete_post_tag(id):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM PostTags
+        WHERE id = ?
+        """, (id, ))
