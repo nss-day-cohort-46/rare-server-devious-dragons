@@ -19,6 +19,7 @@ from tags.tag_request import delete_post_tag
 from reactions.request import get_all_reactions
 from reactions.reactionRequest import get_all_postReactions
 from reactions.reactionRequest import create_postReaction
+from reactions.reactionRequest import get_postReactions_by_reaction
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -103,6 +104,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             
             elif resource == "postReactions":
                 response = f"{get_all_postReactions()}"
+            
+            "
         
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
@@ -110,6 +113,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "postId" and resource == "comments":
                 response = get_comments_by_post_id(value)
             
+            if key == ""resource == "filterPostReactions":
+                response = f"{get_postReactions_by_reaction(reactionId)}
+        
         self.wfile.write(f"{response}".encode())
 
     def do_POST(self):

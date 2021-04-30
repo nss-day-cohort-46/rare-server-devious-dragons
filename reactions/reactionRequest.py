@@ -48,29 +48,30 @@ def create_postReaction(react_post):
 
     return json.dumps(react_post)
 
-# def get_postReactions_by_reaction():
-#     with sqlite3.connect("./rare.db") as conn:
+def get_postReactions_by_reaction(reactionId):
+    with sqlite3.connect("./rare.db") as conn:
 
-#         conn.row_factory = sqlite3.Row
-#         db_cursor = conn.cursor()
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
 
-#         db_cursor.execute("""
-#             SELECT 
-#                 pr.id,
-#                 pr.user_id,
-#                 pr.reaction_id,
-#                 pr.post_id
-#             FROM PostReactions pr
-#         """)
+        db_cursor.execute("""
+            SELECT 
+                pr.id,
+                pr.user_id,
+                pr.reaction_id,
+                pr.post_id
+            FROM PostReactions pr
+            WHERE pr.reaction_id = ?
+        """, (reactionId, ))
 
-#         post_reactions = []
+        post_reactions = []
 
-#         dataset = db_cursor.fetchall()
+        dataset = db_cursor.fetchall()
 
-#         for row in dataset:
+        for row in dataset:
 
-#             reaction = PostReaction(row['id'], row['user_id'], row['reaction_id'], row['post_id'])
+            reaction = PostReaction(row['id'], row['user_id'], row['reaction_id'], row['post_id'])
 
-#             post_reactions.append(reaction.__dict__)
+            post_reactions.append(reaction.__dict__)
 
-#     return json.dumps(post_reactions)
+    return json.dumps(post_reactions)
