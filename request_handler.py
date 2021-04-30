@@ -105,7 +105,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "postReactions":
                 response = f"{get_all_postReactions()}"
             
-            "
         
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
@@ -113,8 +112,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "postId" and resource == "comments":
                 response = get_comments_by_post_id(value)
             
-            if key == ""resource == "filterPostReactions":
-                response = f"{get_postReactions_by_reaction(reactionId)}
         
         self.wfile.write(f"{response}".encode())
 
