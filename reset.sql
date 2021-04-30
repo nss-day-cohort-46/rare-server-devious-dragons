@@ -132,7 +132,11 @@ VALUES
 (3,1,"Zzzzz."),
 (3,3,"Bee boo boo bee boo.");
 
-INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('like', 'https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-10-128.png');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('love', 'https://cdn4.iconfinder.com/data/icons/basic-ui-2-line/32/heart-love-like-likes-loved-favorite-128.png	');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('dislike', 'https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-20-128.png');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('wow', 'https://cdn3.iconfinder.com/data/icons/emoticon-back-white/16/emotion_b_w_Strange-128.png');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('approve', 'https://cdn1.iconfinder.com/data/icons/feather-2/24/check-128.png');
 
 INSERT INTO Tags ('label')
 VALUES  ('JavaScript'),

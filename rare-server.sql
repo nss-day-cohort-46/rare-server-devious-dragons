@@ -89,7 +89,7 @@ CREATE TABLE "Categories" (
 
 INSERT INTO Categories ('label') VALUES ('News');
 INSERT INTO Tags ('label') VALUES ('JavaScript');
-INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('approve', 'https://cdn1.iconfinder.com/data/icons/feather-2/24/check-128.png');
 
 INSERT INTO Users VALUES (null, "Phineas", "Smith","108@summer.com", "What do you want to do taday Ferb?", "SummerRocks", "Perry", "N/A", "2020/25/04", 1,  0);
 INSERT INTO Users VALUES (null, "Ferb", "Smith","109@summer.com", "Where's Perry", "SummerRocks", "Phineas", "N/A", "2020/25/04", 0,  0);
@@ -104,22 +104,4 @@ SELECT * FROM PostTags
 
 SELECT * FROM Posts
 
-SELECT 
-    t.id,
-    t.label,
-    pt.tag_id,
-    pt.id post_tagId
-FROM PostTags pt
-JOIN Tags t
-    ON t.id = pt.tag_id
-WHERE pt.post_id = 3
-
-SELECT 
-    pt.id,
-    pt.tag_id,
-    t.id tagId,
-    t.label
-FROM PostTags pt
-JOIN Tags t
-    ON t.id = pt.tag_id
-WHERE pt.post_id = 3
+SELECT * FROM PostReactions

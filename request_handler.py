@@ -16,6 +16,10 @@ from tags.request import update_tag
 from tags.request import get_single_tag
 from tags.tag_request import create_post_tag
 from tags.tag_request import delete_post_tag
+from reactions.request import get_all_reactions
+from reactions.reactionRequest import get_all_postReactions
+from reactions.reactionRequest import create_postReaction
+from reactions.reactionRequest import get_postReactions_by_reaction
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -94,13 +98,21 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_user_by_id(id)}"
                 else:
                     response = f"{get_all_users()}"
-
+            
+            elif resource == "reactions":
+                response = f"{get_all_reactions()}"
+            
+            elif resource == "postReactions":
+                response = f"{get_all_postReactions()}"
+            
+        
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
 
             if key == "postId" and resource == "comments":
                 response = get_comments_by_post_id(value)
             
+        
         self.wfile.write(f"{response}".encode())
 
     def do_POST(self):
@@ -140,6 +152,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "subscriptions":
             new_item = create_subscription(post_body)
+        
+        if resource == "postReaction":
+            new_item = create_postReaction(post_body)
 
 
         self.wfile.write(f"{new_item}".encode())
