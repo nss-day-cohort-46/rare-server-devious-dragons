@@ -48,23 +48,23 @@ def get_all_reactions():
 
     #     return json.dumps(tag.__dict__)
 
-# def create_reaction(reaction_post):
-    # with sqlite3.connect("./rare.db") as conn:
-    #     db_cursor = conn.cursor()
+def create_reaction(reaction_post):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
 
-    #     db_cursor.execute("""
-    #     INSERT INTO Tags
-    #         (label)
-    #     VALUES
-    #         ( ?);
-    #     """, (tag_post['label'], ))
+        db_cursor.execute("""
+        INSERT INTO Reactions
+            (label, image_url)
+        VALUES
+            ( ?, ?);
+        """, (reaction_post['label'], reaction_post['imageUrl'], ))
 
-    #     id = db_cursor.lastrowid
+        id = db_cursor.lastrowid
 
-    #     tag_post['id'] = id
+        reaction_post['id'] = id
 
 
-    # return json.dumps(tag_post)
+    return json.dumps(reaction_post)
 
 # def delete_reaction(id):
     # with sqlite3.connect("./rare.db") as conn:
