@@ -102,6 +102,8 @@ SELECT * FROM Tags
 
 SELECT * FROM PostTags
 
-SELECT * FROM Posts
+SELECT * FROM Reactions
 
 SELECT * FROM PostReactions
+
+

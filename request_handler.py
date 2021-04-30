@@ -17,6 +17,7 @@ from tags.request import get_single_tag
 from tags.tag_request import create_post_tag
 from tags.tag_request import delete_post_tag
 from reactions.request import get_all_reactions
+from reactions.request import create_reaction
 from reactions.reactionRequest import get_all_postReactions
 from reactions.reactionRequest import create_postReaction
 from reactions.reactionRequest import get_postReactions_by_reaction
@@ -155,6 +156,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "postReaction":
             new_item = create_postReaction(post_body)
+        
+        if resource == "reactions":
+            new_item = create_reaction(post_body)
 
 
         self.wfile.write(f"{new_item}".encode())
