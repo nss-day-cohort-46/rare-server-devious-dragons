@@ -24,7 +24,7 @@ def get_all_postReactions():
 
         for row in dataset:
 
-            reaction = PostReaction(row['id'], row['user_id'], row['reaction_id'], row['post_id'])
+            reaction = PostReaction(row['id'], row['user_id'], row['post_id'], row['reaction_id'])
 
             post_reactions.append(reaction.__dict__)
 
